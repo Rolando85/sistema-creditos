@@ -14,184 +14,276 @@
   <meta name="apple-mobile-web-app-title" content="Créditos">
 
   <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+  
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       background-color: #f5f7fa;
       color: #333;
+      line-height: 1.5;
+      -webkit-text-size-adjust: none; /* Evita zoom en móviles */
     }
+  
     .container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 100%;
+      margin: 10px;
+      padding: 15px;
       background: white;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
     }
+  
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       color: #2c3e50;
+      padding: 10px;
     }
+  
+    header h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+  
+    header p {
+      font-size: 0.9rem;
+      margin: 5px 0 0;
+      color: #555;
+    }
+  
+    /* Botones responsivos */
     .btn-group {
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
       flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 15px;
     }
+  
     .btn {
-      padding: 12px 20px;
+      padding: 10px 16px;
       background-color: #3498db;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 14px;
-      transition: background 0.3s;
+      font-size: 0.9rem;
+      flex: 1 1 calc(50% - 8px);
+      min-width: 120px;
+      text-align: center;
     }
-    .btn:hover { background-color: #2980b9; }
-    .btn.add-client { background-color: #2ecc71; }
-    .btn.view-clients { background-color: #9b59b6; }
-    .btn.add-product { background-color: #f39c12; }
-    .btn.pay { background-color: #3498db; }
-    .btn.edit { background-color: #95a5a6; }
-    .btn.delete { background-color: #e74c3c; }
-
+  
+    .btn:hover {
+      background-color: #2980b9;
+    }
+  
+    /* Secciones */
     .section {
       display: none;
-      padding: 20px;
+      padding: 15px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      margin-top: 20px;
+      margin-top: 15px;
       background-color: #fdfefe;
       animation: fadeIn 0.4s;
     }
-    .section.active { display: block; }
-
+  
+    .section.active {
+      display: block;
+    }
+  
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
+  
     h2, h3 {
       color: #2c3e50;
       margin-top: 0;
+      font-size: 1.3rem;
     }
+  
     label {
       display: block;
-      margin: 10px 0 5px;
+      margin: 8px 0 4px;
       font-weight: 600;
       color: #555;
+      font-size: 0.9rem;
     }
+  
     input, select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 0.95rem;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-align: left;
-    }
-    th {
-      background-color: #ecf0f1;
-      color: #2c3e50;
-    }
-    tr:hover { background-color: #f8f9fa; }
-
-    /* Resumen fijo */
-    .client-info {
-      background-color: #e8f4fc;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border-left: 4px solid #3498db;
-    }
-    .summary {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: white;
-      padding: 12px;
-      border-radius: 6px;
-      margin: 10px 0;
-      font-weight: bold;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .summary > div {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      border-radius: 6px;
-    }
-    .total { background-color: #d5f5e3; color: #1b5e20; }
-    .paid { background-color: #d4edda; color: #155724; }
-    .pending { background-color: #f8d7da; color: #721c24; }
-
-    .hidden { display: none; }
-    .action-buttons { display: flex; gap: 8px; }
-    .action-buttons button {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-    .no-data {
-      text-align: center;
-      color: #7f8c8d;
-      font-style: italic;
-      padding: 20px;
-    }
-    .search-box {
-      margin-bottom: 15px;
-    }
-    .search-box input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    /* Contenedor con scroll para productos */
+  
+    /* Tablas responsivas */
     .products-container {
       max-height: 400px;
       overflow-y: auto;
       margin-top: 10px;
       border: 1px solid #eee;
       border-radius: 8px;
-      padding: 10px;
       background: #fcfcfc;
     }
-
-    /* Botones fijos en la parte inferior */
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      display: block;
+      overflow-x: auto; /* Scroll horizontal */
+      white-space: nowrap;
+    }
+  
+    th, td {
+      padding: 10px 8px;
+      text-align: left;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+  
+    th {
+      background-color: #ecf0f1;
+      color: #2c3e50;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+  
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+  
+    /* Resumen fijo */
+    .client-info {
+      background-color: #e8f4fc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 4px solid #3498db;
+      font-size: 0.9rem;
+    }
+  
+    .summary {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      font-size: 0.9rem;
+    }
+  
+    .summary > div {
+      flex: 1 1 100%;
+      text-align: center;
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 0.9em;
+    }
+  
+    .total { background-color: #d5f5e3; color: #1b5e20; }
+    .paid { background-color: #d4edda; color: #155724; }
+    .pending { background-color: #f8d7da; color: #721c24; }
+  
+    /* Acciones en botones */
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+  
+    .action-buttons button {
+      padding: 5px 8px;
+      font-size: 0.8rem;
+    }
+  
+    /* Mensaje cuando no hay datos */
+    .no-data {
+      text-align: center;
+      color: #7f8c8d;
+      font-style: italic;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+  
+    /* Búsqueda */
+    .search-box {
+      margin-bottom: 12px;
+    }
+  
+    .search-box input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  
+    /* Botones fijos en móvil */
     .floating-actions {
       position: sticky;
-      bottom: 20px;
+      bottom: 10px;
       background: white;
-      padding: 15px;
+      padding: 12px;
       border-radius: 8px;
       box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 8px;
+      margin-top: 15px;
       z-index: 10;
+      flex-wrap: wrap;
     }
-
-    .floating-spacer {
-      height: 80px;
+  
+    .floating-actions button {
+      font-size: 0.9rem;
+      padding: 8px 14px;
+    }
+  
+    /* Ajuste en pantallas pequeñas */
+    @media (max-width: 480px) {
+      .container {
+        margin: 5px;
+        padding: 10px;
+      }
+  
+      .btn {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+      }
+  
+      h2 {
+        font-size: 1.2rem;
+      }
+  
+      .summary {
+        font-size: 0.85rem;
+      }
+  
+      .summary > div {
+        padding: 5px;
+      }
+  
+      .action-buttons button {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+      }
     }
   </style>
 </head>
@@ -341,32 +433,24 @@
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- PWA: Manifest como blob -->
+  <!-- PWA: Manifest -->
   <script>
-    // Crear manifest.json como blob
     const manifestContent = {
       name: "Sistema de Créditos",
       short_name: "Créditos",
-      description: "Control de clientes, productos y pagos en córdobas",
+      description: "Control de clientes, productos y pagos",
       start_url: "./",
       display: "standalone",
       background_color: "#f5f7fa",
       theme_color: "#3498db",
-      orientation: "portrait",
       icons: [
         {
           src: "image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233498db'/><text x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em'>💳</text></svg>",
           sizes: "192x192",
           type: "image/svg+xml"
-        },
-        {
-          src: "image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233498db'/><text x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em'>💳</text></svg>",
-          sizes: "512x512",
-          type: "image/svg+xml"
         }
       ]
     };
-
     const manifestURL = URL.createObjectURL(new Blob([JSON.stringify(manifestContent)], { type: 'application/json' }));
     const link = document.createElement('link');
     link.rel = 'manifest';
@@ -380,13 +464,8 @@
       window.addEventListener('load', () => {
         const swContent = `
           const CACHE_NAME = 'credito-v1';
-          const urlsToCache = ['./', './index.html'];
-          self.addEventListener('install', e => {
-            e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
-          });
-          self.addEventListener('fetch', e => {
-            e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
-          });
+          self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME)));
+          self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
         `;
         const blob = new Blob([swContent], { type: 'text/javascript' });
         const url = URL.createObjectURL(blob);
@@ -398,14 +477,14 @@
   <!-- Código principal -->
   <script>
     // === 🔴 PEGA TUS DATOS DE SUPABASE AQUÍ ===
-    const SUPABASE_URL = 'https://bihgquwcjcwqpxgffsza.supabase.co'; // ← Tu URL
+    const SUPABASE_URL = 'https://bihgquwcjcwqpxgffsza.supabase.co'; // ← Tu URL real
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpaGdxdXdjamN3cXB4Z2Zmc3phIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyOTEyNzMsImV4cCI6MjA3MDg2NzI3M30.JqMt_VJauWXSyBl2AKpjfRE3TOLbIbggc9fjCtObEf4'; // ← Tu anon key
 
     if (SUPABASE_URL.includes('TU_URL') || SUPABASE_KEY.includes('...')) {
-      alert('🚨 Por favor, reemplaza TU_URL y TU_ANON_KEY con tus datos reales de Supabase');
+      alert('🚨 Reemplaza TU_URL y TU_ANON_KEY con tus datos reales');
     }
 
-    // ✅ Conexión a Supabase
+    // ✅ Inicializar Supabase
     const { createClient } = window.supabase;
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -424,8 +503,8 @@
     async function loadClients(filter = '') {
       const { data, error } = await supabase.from('clientes').select('*');
       if (error) {
-        console.error('Error al cargar clientes:', error);
-        alert('Error al conectar con Supabase');
+        console.error('Error:', error);
+        alert('Error al cargar clientes');
         return;
       }
 
@@ -479,7 +558,7 @@
       }]);
 
       if (error) {
-        alert("Error al guardar: " + error.message);
+        alert("Error: " + error.message);
       } else {
         document.getElementById("clientName").value = "";
         document.getElementById("clientEmail").value = "";
@@ -492,7 +571,7 @@
     async function viewClient(clientId) {
       const { data, error } = await supabase.from('clientes').select('*').eq('id', clientId).single();
       if (error) {
-        alert("Cliente no encontrado: " + error.message);
+        alert("Error: " + error.message);
         return;
       }
 
@@ -502,12 +581,13 @@
       document.getElementById("clientDisplayEmail").textContent = data.email || 'No registrado';
       document.getElementById("clientDisplayPhone").textContent = data.telefono || 'No registrado';
 
-      updateSummary(data.datos || { products: [], payments: [] });
+      const datos = data.datos || { products: [], payments: [] };
+      updateSummary(datos);
       hideAllSections();
       document.getElementById("clientDetailSection").classList.add("active");
 
-      loadProducts(data.datos?.products || []);
-      loadPayments(data.datos?.payments || []);
+      loadProducts(datos.products || []);
+      loadPayments(datos.payments || []);
       document.getElementById("paymentsTable").classList.add("hidden");
     }
 
@@ -608,7 +688,7 @@
 
       const { error } = await supabase.from('clientes').update({ datos }).eq('id', currentClientId);
       if (error) {
-        alert("Error al guardar: " + error.message);
+        alert("Error: " + error.message);
       } else {
         document.getElementById("productName").value = "";
         hideForm("product");
@@ -644,7 +724,7 @@
 
       const { error } = await supabase.from('clientes').update({ datos }).eq('id', currentClientId);
       if (error) {
-        alert("Error al guardar pago: " + error.message);
+        alert("Error: " + error.message);
       } else {
         document.getElementById("paymentAmount").value = "";
         hideForm("payment");
@@ -654,9 +734,12 @@
       }
     }
 
-    function editProduct(index) {
+    async function editProduct(index) {
+      const products = await getAllProducts();
+      const p = products[index];
+      if (!p) return;
+
       const tr = document.getElementById("productsList").children[index];
-      const p = getAllProducts()[index];
       tr.cells[0].innerHTML = `<input class="edit-input" value="${p.name}">`;
       tr.cells[1].innerHTML = `<input class="edit-input" type="number" step="0.01" value="${p.price}">`;
       tr.cells[3].innerHTML = `
@@ -668,9 +751,8 @@
     }
 
     async function saveProductEdit(index) {
-      const tr = document.getElementById("productsList").children[index];
-      const name = tr.querySelector("input").value.trim();
-      const price = parseFloat(tr.querySelector("input[type=number]").value);
+      const name = document.querySelector("#productsList tr:nth-child(" + (index + 1) + ") .edit-input").value.trim();
+      const price = parseFloat(document.querySelector("#productsList tr:nth-child(" + (index + 1) + ") .edit-input[type=number]").value);
       if (!name || isNaN(price) || price <= 0) {
         alert("Datos inválidos.");
         return;
@@ -684,7 +766,7 @@
 
       const { error } = await supabase.from('clientes').update({ datos }).eq('id', currentClientId);
       if (error) {
-        alert("Error al guardar: " + error.message);
+        alert("Error: " + error.message);
       } else {
         loadProducts(datos.products);
         updateSummary(datos);
@@ -709,9 +791,12 @@
       }
     }
 
-    function editPayment(index) {
+    async function editPayment(index) {
+      const payments = await getAllPayments();
+      const p = payments[index];
+      if (!p) return;
+
       const tr = document.getElementById("paymentsList").children[index];
-      const p = getAllPayments()[index];
       tr.cells[0].innerHTML = `<input class="edit-input" type="number" step="0.01" value="${p.amount}">`;
       tr.cells[2].innerHTML = `
         <div class="action-buttons">
@@ -722,8 +807,7 @@
     }
 
     async function savePaymentEdit(index) {
-      const tr = document.getElementById("paymentsList").children[index];
-      const amount = parseFloat(tr.querySelector("input").value);
+      const amount = parseFloat(document.querySelector("#paymentsList tr:nth-child(" + (index + 1) + ") .edit-input").value);
       if (isNaN(amount) || amount <= 0) {
         alert("Monto inválido.");
         return;
@@ -738,9 +822,7 @@
       const balance = totalSpent - totalPaid;
 
       if (amount > balance) {
-        const confirmar = confirm(
-          `¿Ajustar al saldo? El nuevo monto (C$${amount.toFixed(2)}) excede el saldo (C$${balance.toFixed(2)}).\n\nSe ajustará a C$${balance.toFixed(2)}. ¿Continuar?`
-        );
+        const confirmar = confirm(`¿Ajustar al saldo? Se usará C$${balance.toFixed(2)}. ¿Continuar?`);
         if (!confirmar) return;
         datos.payments[index] = { ...datos.payments[index], amount: balance };
       } else {
@@ -789,16 +871,18 @@
       }
     }
 
-    function getAllProducts() {
-      const datos = JSON.parse(localStorage.getItem('clientes_con_productos') || '[]')
-        .find(c => c.id == currentClientId)?.datos || { products: [] };
-      return datos.products;
+    async function getAllProducts() {
+      if (!currentClientId) return [];
+      const { data, error } = await supabase.from('clientes').select('datos').eq('id', currentClientId).single();
+      if (error) return [];
+      return data.datos?.products || [];
     }
 
-    function getAllPayments() {
-      const datos = JSON.parse(localStorage.getItem('clientes_con_productos') || '[]')
-        .find(c => c.id == currentClientId)?.datos || { payments: [] };
-      return datos.payments;
+    async function getAllPayments() {
+      if (!currentClientId) return [];
+      const { data, error } = await supabase.from('clientes').select('datos').eq('id', currentClientId).single();
+      if (error) return [];
+      return data.datos?.payments || [];
     }
 
     function scrollToPayments() {
